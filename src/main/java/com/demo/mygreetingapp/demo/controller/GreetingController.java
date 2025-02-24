@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/greeting") // works for all
@@ -32,5 +33,10 @@ public class GreetingController {
     @GetMapping("/all")
     public List<GreetingEntity> getAllGreetings() {
         return greetingService.getAllGreeting;
+    }
+
+    @GetMapping("/{id}")
+    public Optional<GreetingEntity> getGreetingById(@PathVariable Long id) {
+        return greetingService.getGreetingById(id);
     }
 }
