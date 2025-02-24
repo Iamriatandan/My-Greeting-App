@@ -43,4 +43,11 @@ public class GreetingController {
     public Optional<GreetingEntity> getGreetingById(@PathVariable Long id) {
         return greetingService.getGreetingById(id);
     }
+
+    @DeleteMapping("/{id}")
+    public String deleteGreeting(@PathVariable Long id) {
+        greetingService.deleteGreeting(id);
+        return "Greeting with ID " + id + " has been deleted successfully.";
+    }
+
 }
