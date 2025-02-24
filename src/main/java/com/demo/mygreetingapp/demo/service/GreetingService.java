@@ -47,5 +47,14 @@ public class GreetingService {
     public Optional<GreetingEntity> getGreetingById(Long id) {
         return greetingRepository.findById(id);
     }
+
+    public void deleteGreeting(Long id) {
+        if (greetingRepository.existsById(id)) {
+            greetingRepository.deleteById(id);  // ✅ Deletes the greeting
+        } else {
+            throw new RuntimeException("Greeting not found with ID: " + id);
+        }
+    }
+
 }
 
