@@ -1,21 +1,38 @@
 package com.demo.mygreetingapp.demo.service;
 
-import com.demo.mygreetingapp.demo.model.Greeting;
+import com.demo.mygreetingapp.demo.model.GreetingEntity;
+import com.demo.mygreetingapp.demo.repository.GreetingRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class GreetingService {
-    public Greeting getGreetingMessage(String firstName , String lastName){
-        if(firstName != null && lastName != null){
-            return new Greeting("Hello" + firstName + " " + lastName);
-        }
-        else if(firstName!=null){
-            return new Greeting("Hello" + firstName + "!" );
+    private final GreetingRepository greetingRepository;
+    public List<GreetingEntity> getAllGreeting;
+
+    public GreetingService(GreetingRepository greetingRepository) {
+        this.greetingRepository = greetingRepository;
+    }
+
+    // Generate a greeting message
+    public GreetingEntity getGreetingMessage(String firstName, String lastName) {
+        String message;
+        if (firstName != null && lastName != null) {
+            message = "Hello, " + firstName + " " + lastName + "!";
+        } else if (firstName != null) {
+            message = "Hello, " + firstName + "!";
         } else if (lastName != null) {
-            return new Greeting("Hello " + lastName + "!");
+            message = "Hello, " + lastName + "!";
+        } else {
+            message = "Hello, World!";
         }
-        else {
-            return new Greeting("Hello World !");
-        }
+        return new GreetingEntity(message);
+    }
+
+    // Save greeting message
+    public GreetingEntity saveGreeting(String message) {
+        GreetingEntity greeting = new GreetingEntity(message);
+        return greetingRepository.save(greeting);
     }
 }

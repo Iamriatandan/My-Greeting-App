@@ -1,8 +1,10 @@
 package com.demo.mygreetingapp.demo.controller;
-import com.demo.mygreetingapp.demo.model.Greeting;
+import com.demo.mygreetingapp.demo.model.GreetingEntity;
 import com.demo.mygreetingapp.demo.service.GreetingService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/greeting") // works for all
@@ -12,29 +14,23 @@ public class GreetingController {
     public GreetingController(GreetingService greetingService) {
         this.greetingService = greetingService;
     }
-
+    // ✅ GET Request - Returns a greeting message
     @GetMapping
-    public Greeting getGreeting(
+    public GreetingEntity getGreeting(
             @RequestParam(name = "firstName", required = false) String firstName,
             @RequestParam(name = "lastName", required = false) String lastName) {
         return greetingService.getGreetingMessage(firstName, lastName);
     }
 
-    // POST Request - Accepts and returns a greeting message
+    //  POST Request - Saves a greeting message
     @PostMapping
-    public Greeting postGreeting() {
-        return new Greeting("Hello, POST Request!");
+    public GreetingEntity saveGreeting(@RequestBody GreetingEntity greeting) {
+        return greetingService.saveGreeting(greeting.getMessage());
     }
 
-    // PUT Request - Updates and returns a greeting message
-    @PutMapping
-    public Greeting putGreeting() {
-        return new Greeting("Hello, PUT Request!");
-    }
-
-    // DELETE Request - Deletes a greeting
-    @DeleteMapping
-    public Greeting deleteGreeting() {
-        return new Greeting("Hello, DELETE Request!");
+    //  NEW: GET - Fetch All Greetings
+    @GetMapping("/all")
+    public List<GreetingEntity> getAllGreetings() {
+        return greetingService.getAllGreeting;
     }
 }
