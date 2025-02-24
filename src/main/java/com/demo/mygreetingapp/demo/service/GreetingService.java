@@ -10,13 +10,12 @@ import java.util.Optional;
 @Service
 public class GreetingService {
     private final GreetingRepository greetingRepository;
-    public List<GreetingEntity> getAllGreeting;
 
     public GreetingService(GreetingRepository greetingRepository) {
         this.greetingRepository = greetingRepository;
     }
 
-    // Generate a greeting message
+    // ✅ Generate and Save Greeting Message
     public GreetingEntity getGreetingMessage(String firstName, String lastName) {
         String message;
         if (firstName != null && lastName != null) {
@@ -28,18 +27,25 @@ public class GreetingService {
         } else {
             message = "Hello, World!";
         }
-        return new GreetingEntity(message);
+
+        GreetingEntity greeting = new GreetingEntity(message);
+        return greetingRepository.save(greeting);  // ✅ Saves & Generates ID
     }
 
-    // Save greeting message
+    // ✅ Save a Greeting Message
     public GreetingEntity saveGreeting(String message) {
         GreetingEntity greeting = new GreetingEntity(message);
-        return saveGreeting(message);
+        return greetingRepository.save(greeting);
     }
 
+    // ✅ Fetch All Greetings
+    public List<GreetingEntity> getAllGreeting() {  // ✅ Fixed Method Name
+        return greetingRepository.findAll();
+    }
 
-    //  NEW: Fetch greeting by ID
+    // ✅ Fetch Greeting by ID
     public Optional<GreetingEntity> getGreetingById(Long id) {
         return greetingRepository.findById(id);
     }
 }
+
