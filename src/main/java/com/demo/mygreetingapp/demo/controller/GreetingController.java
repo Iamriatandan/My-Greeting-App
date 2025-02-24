@@ -43,4 +43,10 @@ public class GreetingController {
     public Optional<GreetingEntity> getGreetingById(@PathVariable Long id) {
         return greetingService.getGreetingById(id);
     }
+
+    @PutMapping("/{id}")
+    public GreetingEntity updateGreeting(@PathVariable Long id, @RequestBody GreetingEntity updatedGreeting) {
+        return greetingService.updateGreeting(id, updatedGreeting.getMessage());
+    }
+
 }
