@@ -2,6 +2,8 @@ package com.demo.mygreetingapp.demo.controller;
 import com.demo.mygreetingapp.demo.model.Greeting;
 import com.demo.mygreetingapp.demo.service.GreetingService;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestParam;
+
 @RestController
 @RequestMapping("/greeting") // works for all
 public class GreetingController {
@@ -11,10 +13,11 @@ public class GreetingController {
         this.greetingService = greetingService;
     }
 
-    // GET Request - Returns a greeting message
     @GetMapping
-    public Greeting getGreeting() {
-        return greetingService.getGreetingMessage();
+    public Greeting getGreeting(
+            @RequestParam(name = "firstName", required = false) String firstName,
+            @RequestParam(name = "lastName", required = false) String lastName) {
+        return greetingService.getGreetingMessage(firstName, lastName);
     }
 
     // POST Request - Accepts and returns a greeting message
@@ -34,6 +37,4 @@ public class GreetingController {
     public Greeting deleteGreeting() {
         return new Greeting("Hello, DELETE Request!");
     }
-
-
 }
